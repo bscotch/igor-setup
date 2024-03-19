@@ -1,6 +1,6 @@
 # igor-setup
 
-This action allows you to set up the [Igor executable](https://manual.gamemaker.io/beta/en/#t=Settings%2FBuilding_via_Command_Line.htm) to allow building GameMaker projects.
+This action allows you to set up the [Igor executable](https://manual.gamemaker.io/beta/en/#t=Settings%2FBuilding_via_Command_Line.htm) to build GameMaker projects with the [Igor-Build](https://github.com/bscotch/igor-build) GitHub Action.
 
 ### Caveats
 
@@ -52,4 +52,4 @@ This action allows you to set up the [Igor executable](https://manual.gamemaker.
 
 ## Examples
 
-See <https://github.com/shichen85/igor_demo/blob/bdafd0c5b1e6a237cbe6eb3fd2c01791c3aa52ab/.github/workflows/ci.yml>
+See <https://github.com/bscotch/ganary/.github/workflows/ci.yml>

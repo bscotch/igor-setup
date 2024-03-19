@@ -2,8 +2,6 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
     paths-ignore:
       - "**.md"
       - "**.template"
@@ -18,7 +16,7 @@ jobs:
   test:
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
     steps:

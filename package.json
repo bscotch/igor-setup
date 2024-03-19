@@ -1,7 +1,7 @@
 {
-  "name": "setup-igor",
+  "name": "igor-setup",
   "author": "Shi Chen",
-  "version": "0.0.27",
+  "version": "0.0.32",
   "main": "./build/index.js",
   "type": "module",
   "files": [
@@ -10,13 +10,13 @@
     "build/types/**/*"
   ],
   "scripts": {
-    "release": "rimraf dist && ncc build src/index.ts -o dist",
-    "test:main": "npm run release && node -r dotenv/config ./dist/index.js",
-    "test": "npm run build && mocha --enable-source-maps --bail ./build/test/",
-    "build": "rimraf build && tsc && tsc-alias",
-    "version": "npm run format && git add -A",
+    "build": "rimraf dist && ncc build src/index.ts -o dist -a",
+    "test:main": "npm run build && node -r dotenv/config ./dist/index.js",
+    "test": "npm run test:build && mocha --enable-source-maps --bail ./build/test/",
+    "test:build": "rimraf build && tsc && tsc-alias",
+    "version": "git add -A",
     "postversion": "git push --follow-tags",
-    "preversion": "npm run release"
+    "preversion": "npm run build"
   },
   "license": "MIT",
   "dependencies": {

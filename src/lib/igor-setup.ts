@@ -267,6 +267,7 @@ export class IgorSetup {
       cwd: path.dirname(cmd),
     });
     const output = res.output.toString();
+    core.info(output);
     return output.includes(this.targetRuntime);
   }
 
@@ -351,9 +352,6 @@ export class IgorSetup {
       case "android":
         requiredModules = ["android"];
         break;
-      case "switch":
-        requiredModules = ["switch"];
-        break;
       case "windows":
         requiredModules = ["windows", "windowsYYC"];
         break;
@@ -365,15 +363,6 @@ export class IgorSetup {
         break;
       case "linux":
         requiredModules = ["linux", "linuxYYC"];
-        break;
-      case "xboxone":
-        requiredModules = ["xboxone"];
-        break;
-      case "uwp":
-        requiredModules = ["windowsuap"];
-        break;
-      case "xboxseriesxs":
-        requiredModules = ["xboxseriesxs"];
         break;
       default:
         throw new Error(`${targetPlatform} is not supported!`);
@@ -387,9 +376,9 @@ export class IgorSetup {
   }
 
   private _inferFeed() {
-    let feed = "http://gms.yoyogames.com/Zeus-Runtime-NuBeta.rss";
+    let feed = "https://gms.yoyogames.com/Zeus-Runtime-NuBeta.rss";
     if (!this._runtimeExists(feed)) {
-      feed = "http://gms.yoyogames.com/Zeus-Runtime-NuBeta-I.rss";
+      feed = "https://gms.yoyogames.com/Zeus-Runtime-NuBeta-I.rss";
       if (!this._runtimeExists(feed)) {
         feed = "https://gms.yoyogames.com/Zeus-Runtime.rss";
         if (!this._runtimeExists(feed)) {

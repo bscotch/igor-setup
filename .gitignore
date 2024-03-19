@@ -8,5 +8,4 @@ gm-sandbox
 bootstrapper
 runtimes
 .env
-dist/package.json
 settings_override.json

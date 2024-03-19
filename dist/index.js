@@ -74208,6 +74208,7 @@ class IgorSetup {
             cwd: external_path_default().dirname(cmd),
         });
         const output = res.output.toString();
+        core.info(output);
         return output.includes(this.targetRuntime);
     }
     /**
@@ -74283,9 +74284,6 @@ class IgorSetup {
             case "android":
                 requiredModules = ["android"];
                 break;
-            case "switch":
-                requiredModules = ["switch"];
-                break;
             case "windows":
                 requiredModules = ["windows", "windowsYYC"];
                 break;
@@ -74298,15 +74296,6 @@ class IgorSetup {
             case "linux":
                 requiredModules = ["linux", "linuxYYC"];
                 break;
-            case "xboxone":
-                requiredModules = ["xboxone"];
-                break;
-            case "uwp":
-                requiredModules = ["windowsuap"];
-                break;
-            case "xboxseriesxs":
-                requiredModules = ["xboxseriesxs"];
-                break;
             default:
                 throw new Error(`${targetPlatform} is not supported!`);
         }
@@ -74318,9 +74307,9 @@ class IgorSetup {
         return requiredModules;
     }
     _inferFeed() {
-        let feed = "http://gms.yoyogames.com/Zeus-Runtime-NuBeta.rss";
+        let feed = "https://gms.yoyogames.com/Zeus-Runtime-NuBeta.rss";
         if (!this._runtimeExists(feed)) {
-            feed = "http://gms.yoyogames.com/Zeus-Runtime-NuBeta-I.rss";
+            feed = "https://gms.yoyogames.com/Zeus-Runtime-NuBeta-I.rss";
             if (!this._runtimeExists(feed)) {
                 feed = "https://gms.yoyogames.com/Zeus-Runtime.rss";
                 if (!this._runtimeExists(feed)) {
@@ -74434,6 +74423,7 @@ async function run() {
         core.setOutput("runtime-dir", igorSetup.targetRuntimeDir);
         core.setOutput("user-dir", igorSetup.userDir);
         core.setOutput("settings-dir", igorSetup.workingDirLocalSettings);
+        core.setOutput("bootstrapper-dir", igorSetup.bootstrapperDir);
     }
     catch (err) {
         core.setFailed(err.message);

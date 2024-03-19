@@ -54,58 +54,9 @@ const defaultLocalSettings = {
   "machine.Platform Settings.tvOS.default_team_id": "",
   "machine.Platform Settings.macOS.default_team_id": "",
   "machine.Platform Settings.macOS.suppress_build": false,
-  "machine.Platform Settings.PS4.sdk_dir":
-    "C:/Program Files (x86)/SCE/ORBIS SDKs/9.000",
-  "machine.Platform Settings.PS4.tools_dir": "C:/Program Files (x86)/SCE/ORBIS",
-  "machine.Platform Settings.PS4.debug.use_debug_runner": false,
-  "machine.Platform Settings.PS4.debug.runner_path":
-    "${runtimeLocation}/ps4/PS4Runner.elf",
-  "machine.Platform Settings.PS4.visual_studio_path":
-    "c:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/Tools/VsDevCmd.bat",
-  "machine.Platform Settings.PS5.sdk_dir":
-    "C:/Program Files (x86)/SCE/PROSPERO SDKs/4.000",
-  "machine.Platform Settings.PS5.tools_dir":
-    "C:/Program Files (x86)/SCE/PROSPERO",
-  "machine.Platform Settings.PS5.debug.use_debug_runner": false,
-  "machine.Platform Settings.PS5.debug.runner_path":
-    "${runtimeLocation}/ps5/PS5Runner.elf",
-  "machine.Platform Settings.PS5.visual_studio_path":
-    "c:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/Tools/VsDevCmd.bat",
-  "machine.Platform Settings.Switch.sdk_dir":
-    "C:/Nintendo/Switch-13.3.0/NintendoSDK",
-  "machine.Platform Settings.Switch.debug.use_debug_runner": false,
-  "machine.Platform Settings.Switch.debug.runner_path":
-    "${runtimeLocation}/switch/SwitchRunner.nspd",
-  "machine.Platform Settings.Switch.visual_studio_path":
-    "c:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/Tools/VsDevCmd.bat",
   "machine.Platform Settings.Windows.visual_studio_path":
     "c:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/Tools/VsDevCmd.bat",
   "machine.Platform Settings.Windows.choice": 2,
-  "machine.Platform Settings.Windows UWP.win_uwp_visual_studio_path":
-    "c:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/Tools/VsDevCmd.bat",
-  "machine.Platform Settings.Windows UWP.win_uwp_tools_folder":
-    "C:/Program Files (x86)/Windows Kits/10/bin/x86",
-  "machine.Platform Settings.Windows UWP.package_architecture_choice": 3,
-  "machine.Platform Settings.Xbox One.sdk_dir":
-    "C:/Program Files (x86)/Microsoft Durango XDK/180713",
-  "machine.Platform Settings.Xbox One.tools_dir":
-    "C:/Program Files (x86)/Microsoft Durango XDK",
-  "machine.Platform Settings.Xbox One.ms_sdk_dir":
-    "C:/Program Files (x86)/Microsoft SDKs/Durango.180713",
-  "machine.Platform Settings.Xbox One.debug.use_debug_runner": false,
-  "machine.Platform Settings.Xbox One.debug.runner_path":
-    "${runtimeLocation}/xboxone/XboxOneRunner.exe",
-  "machine.Platform Settings.Xbox One.visual_studio_path":
-    "C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/Tools/VsDevCmd.bat",
-  "machine.Platform Settings.Xbox Series XS.sdk_dir":
-    "C:/Program Files (x86)/Microsoft GDK/210603",
-  "machine.Platform Settings.Xbox Series XS.tools_dir":
-    "C:/Program Files (x86)/Microsoft GDK",
-  "machine.Platform Settings.Xbox Series XS.debug.use_debug_runner": false,
-  "machine.Platform Settings.Xbox Series XS.debug.runner_path":
-    "${runtimeLocation}/xboxseriesxs/GDKRunner.exe",
-  "machine.Platform Settings.Xbox Series XS.visual_studio_path":
-    "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/Tools/VsDevCmd.bat",
   "machine.Platform Settings.Steam.steamsdk_path":
     "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/Tools/VsDevCmd.bat",
   "cloud.General Settings.Compiling.ShowVerboseCommands": false,
@@ -120,17 +71,12 @@ const defaultLocalSettings = {
 export type LocalSettings = typeof defaultLocalSettings;
 export type ModuleAliases =
   | "android"
-  | "switch"
   | "windows"
   | "mac"
   | "ios"
   | "linux"
-  | "xboxone"
-  | "windowsuap"
-  | "ps4"
   | "html5"
   | "main"
-  | "xboxseriesxs"
   | string;
 
 const defaultRuntimeReceipt = {
@@ -142,14 +88,10 @@ const defaultRuntimeReceipt = {
   linuxYYC: "linuxYYC",
   mac: "mac",
   macYYC: "macYYC",
-  ps4: "ps4",
-  switch: "switch",
   tvos: "tvos",
   windows: "windows",
   windowsuap: "windowsuap",
   windowsYYC: "windowsYYC",
-  xboxone: "xboxone",
-  xboxseriesxs: "xboxseriesxs",
   "base-module-windows-x64": "base-module-windows-x64",
   "base-module-osx-x64": "base-module-osx-x64",
   "base-module-osx-arm64": "base-module-osx-arm64",
