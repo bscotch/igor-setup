@@ -74007,7 +74007,7 @@ class IgorSetup {
         this.igorExecutable = "";
         this.userName = "tempUser";
         this.bootstrapperDir = __nccwpck_require__.ab + "bootstrapper";
-        this.runtimeDir = __nccwpck_require__.ab + "runtimes";
+        this.runtimeDir = external_path_default().resolve("runtimes");
         this.workingDir = __nccwpck_require__.ab + "gm-sandbox";
         this.userDir = "";
         this.targetRuntimeDir = "";
@@ -74283,9 +74283,6 @@ class IgorSetup {
             case "android":
                 requiredModules = ["android"];
                 break;
-            case "switch":
-                requiredModules = ["switch"];
-                break;
             case "windows":
                 requiredModules = ["windows", "windowsYYC"];
                 break;
@@ -74297,15 +74294,6 @@ class IgorSetup {
                 break;
             case "linux":
                 requiredModules = ["linux", "linuxYYC"];
-                break;
-            case "xboxone":
-                requiredModules = ["xboxone"];
-                break;
-            case "uwp":
-                requiredModules = ["windowsuap"];
-                break;
-            case "xboxseriesxs":
-                requiredModules = ["xboxseriesxs"];
                 break;
             default:
                 throw new Error(`${targetPlatform} is not supported!`);
@@ -74434,6 +74422,7 @@ async function run() {
         core.setOutput("runtime-dir", igorSetup.targetRuntimeDir);
         core.setOutput("user-dir", igorSetup.userDir);
         core.setOutput("settings-dir", igorSetup.workingDirLocalSettings);
+        core.setOutput("bootstrapper-dir", igorSetup.bootstrapperDir);
     }
     catch (err) {
         core.setFailed(err.message);

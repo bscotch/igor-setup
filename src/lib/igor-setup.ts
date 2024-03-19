@@ -351,9 +351,6 @@ export class IgorSetup {
       case "android":
         requiredModules = ["android"];
         break;
-      case "switch":
-        requiredModules = ["switch"];
-        break;
       case "windows":
         requiredModules = ["windows", "windowsYYC"];
         break;
@@ -365,15 +362,6 @@ export class IgorSetup {
         break;
       case "linux":
         requiredModules = ["linux", "linuxYYC"];
-        break;
-      case "xboxone":
-        requiredModules = ["xboxone"];
-        break;
-      case "uwp":
-        requiredModules = ["windowsuap"];
-        break;
-      case "xboxseriesxs":
-        requiredModules = ["xboxseriesxs"];
         break;
       default:
         throw new Error(`${targetPlatform} is not supported!`);
