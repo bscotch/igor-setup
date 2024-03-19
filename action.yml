@@ -1,0 +1,34 @@
+name: "Setup Igor environment"
+description: "Setup a the Igor environment to allow compiling GameMaker projects."
+author: "bscotch"
+inputs:
+  access-key:
+    description: "The access key to generate license file."
+    required: true
+  runtime-version:
+    description: "Version Spec of the GameMaker runtime to use. Cannot be used with `target-yyp`."
+  target-yyp:
+    description: "Path to a yyp file to set the runtime version based on the IDE version. Cannot be used with `runtime-version`."
+  local-settings-override-file:
+    description: "Path to a file to overwrite the default local_settings.json that defines the platform preferences and SDK paths."
+  devices-settings-override-file:
+    description: "Path to a file to overwrite the default devices.json that defines the Device Manager."
+  modules:
+    description: "A comma separated string for the modules to install."
+outputs:
+  runtime-dir:
+    description: "The directory containing the installed runtime."
+  user-dir:
+    description: "The directory containing the `local_settings.json` file."
+  cache-dir:
+    description: "The value for `machine.General Settings.Paths.IDE.AssetCacheFolder` in the `local_settings.json` file."
+  temp-dir:
+    description: "The value for `machine.General Settings.Paths.IDE.TempFolder` in the `local_settings.json` file."
+  settings-dir:
+    description: "The path to the `local_settings.json` file"
+  bootstrapper-dir:
+    description: "The directory containing the Igor bootstrapper. Useful for caching."
+
+runs:
+  using: "node20"
+  main: "dist/index.js"
