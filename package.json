@@ -1,7 +1,7 @@
 {
   "name": "igor-setup",
   "author": "Shi Chen",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "main": "./build/index.js",
   "type": "module",
   "files": [
