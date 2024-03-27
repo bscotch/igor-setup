@@ -10,7 +10,7 @@
     "build/types/**/*"
   ],
   "scripts": {
-    "build": "rimraf dist && ncc build src/index.ts -o dist",
+    "build": "rimraf dist && ncc build src/index.ts -o dist -a",
     "test:main": "npm run build && node -r dotenv/config ./dist/index.js",
     "test": "npm run test:build && mocha --enable-source-maps --bail ./build/test/",
     "test:build": "rimraf build && tsc && tsc-alias",
