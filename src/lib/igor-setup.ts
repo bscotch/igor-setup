@@ -265,6 +265,7 @@ export class IgorSetup {
     const cmd = this.igorExecutable;
     const res = ps.spawnSync(cmd, args, {
       cwd: path.dirname(cmd),
+      stdio: "inherit",
     });
     const output = res.output.toString();
     return output.includes(this.targetRuntime);
@@ -375,9 +376,9 @@ export class IgorSetup {
   }
 
   private _inferFeed() {
-    let feed = "http://gms.yoyogames.com/Zeus-Runtime-NuBeta.rss";
+    let feed = "https://gms.yoyogames.com/Zeus-Runtime-NuBeta.rss";
     if (!this._runtimeExists(feed)) {
-      feed = "http://gms.yoyogames.com/Zeus-Runtime-NuBeta-I.rss";
+      feed = "https://gms.yoyogames.com/Zeus-Runtime-NuBeta-I.rss";
       if (!this._runtimeExists(feed)) {
         feed = "https://gms.yoyogames.com/Zeus-Runtime.rss";
         if (!this._runtimeExists(feed)) {
