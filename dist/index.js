@@ -74007,7 +74007,7 @@ class IgorSetup {
         this.igorExecutable = "";
         this.userName = "tempUser";
         this.bootstrapperDir = __nccwpck_require__.ab + "bootstrapper";
-        this.runtimeDir = external_path_default().resolve("runtimes");
+        this.runtimeDir = __nccwpck_require__.ab + "runtimes";
         this.workingDir = __nccwpck_require__.ab + "gm-sandbox";
         this.userDir = "";
         this.targetRuntimeDir = "";
@@ -74206,9 +74206,9 @@ class IgorSetup {
         const cmd = this.igorExecutable;
         const res = external_child_process_default().spawnSync(cmd, args, {
             cwd: external_path_default().dirname(cmd),
-            stdio: "inherit",
         });
         const output = res.output.toString();
+        core.info(output);
         return output.includes(this.targetRuntime);
     }
     /**
