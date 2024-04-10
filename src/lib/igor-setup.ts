@@ -265,9 +265,9 @@ export class IgorSetup {
     const cmd = this.igorExecutable;
     const res = ps.spawnSync(cmd, args, {
       cwd: path.dirname(cmd),
-      stdio: "inherit",
     });
     const output = res.output.toString();
+    core.info(output);
     return output.includes(this.targetRuntime);
   }
 
