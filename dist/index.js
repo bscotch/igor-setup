@@ -74399,7 +74399,7 @@ async function run() {
         let targetRuntime = core.getInput("runtime-version");
         const targetYyp = core.getInput("target-yyp");
         if (targetRuntime && targetYyp) {
-            throw new Error("You can't specify both runtime-version and target-yyp");
+            core.info("Both runtime-version and target-yyp are specified. Using runtime-version.");
         }
         else if (!targetRuntime && !targetYyp) {
             throw new Error("You must specify either runtime-version or target-yyp");

@@ -20,10 +20,10 @@ This action allows you to set up the [Igor executable](https://manual.gamemaker.
     # Required
     access-key:
 
-    # Version Spec of the GameMaker runtime to use. Cannot be used with `target-yyp`.
+    # Version Spec of the GameMaker runtime to use. Will override the inferred version from `target-yyp` if provided.
     runtime-version:
 
-    # Path to a yyp file to set the runtime version based on the IDE version. Cannot be used with `runtime-version`.
+    # Path to a yyp file to set the runtime version based on the IDE version.
     target-yyp:
 
     # Path to a file to overwrite the default local_settings.json that defines the platform preferences and SDK paths. See https://manual.gamemaker.io/beta/en/#t=Setting_Up_And_Version_Information%2FPlatform_Preferences.htm

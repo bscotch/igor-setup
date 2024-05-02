@@ -6,9 +6,9 @@ inputs:
     description: "The access key to generate license file."
     required: true
   runtime-version:
-    description: "Version Spec of the GameMaker runtime to use. Cannot be used with `target-yyp`."
+    description: "Version Spec of the GameMaker runtime to use. Will override the inferred version from `target-yyp` if provided."
   target-yyp:
-    description: "Path to a yyp file to set the runtime version based on the IDE version. Cannot be used with `runtime-version`."
+    description: "Path to a yyp file to set the runtime version based on the IDE version."
   local-settings-override-file:
     description: "Path to a file to overwrite the default local_settings.json that defines the platform preferences and SDK paths."
   devices-settings-override-file:
