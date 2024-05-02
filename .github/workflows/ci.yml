@@ -5,8 +5,8 @@ on:
     paths-ignore:
       - "**.md"
       - "**.template"
-    tags:
-      - "*"
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
