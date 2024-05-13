@@ -52,4 +52,4 @@ This action allows you to set up the [Igor executable](https://manual.gamemaker.
 
 ## Examples
 
-See <https://github.com/bscotch/ganary/.github/workflows/ci.yml>
+See <https://github.com/bscotch/ganary/blob/main/.github/workflows/ci.yml>
