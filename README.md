@@ -27,6 +27,7 @@ This action allows you to set up the [Igor executable](https://manual.gamemaker.
     target-yyp:
 
     # Path to a file to overwrite the default local_settings.json that defines the platform preferences and SDK paths. See https://manual.gamemaker.io/beta/en/#t=Setting_Up_And_Version_Information%2FPlatform_Preferences.htm
+    # Note that for the key "machine.Platform Settings.Android.Keystore.keystore_alias_password" and "machine.Platform Settings.Android.Keystore.keystore_password", they should be copied directly from the local_settings.json file instead of the IDE, as the file uses the encrypted string.
     # Optional. The default will set up against GitHub hosted runner environments https://github.com/actions/runner-images
     local-settings-override-file:
 
