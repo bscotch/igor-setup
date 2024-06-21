@@ -169,7 +169,7 @@ export class IgorSetup {
     this.userDir = newUserDir;
   }
 
-  installModules(modules?: ModuleAliases[]) {
+  getDefaultModulesIfNull(modules?: ModuleAliases[]) {
     if (!modules || modules.length === 0) {
       switch (platform()) {
         case "win32":
@@ -183,7 +183,11 @@ export class IgorSetup {
           break;
       }
     }
+    return modules as ModuleAliases[];
+  }
 
+  installModules(modules?: ModuleAliases[]) {
+    modules = this.getDefaultModulesIfNull(modules);
     if (this.modulesAreInstalled(modules)) {
       core.info("Modules already installed!");
     } else {

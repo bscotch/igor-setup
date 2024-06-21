@@ -38,6 +38,10 @@ This action allows you to set up the [Igor executable](https://manual.gamemaker.
     # A comma separated string for the modules to install
     # Optional. Default is 'windows' for windows runner, 'android' for Linux runner, and "ios" for MacOS runner
     modules:
+
+    # Set to 'true' to cache the runtime for future workflow runs
+    # Default: 'false'
+    cache:
 ```
 
 ### Outputs

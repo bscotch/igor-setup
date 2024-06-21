@@ -10,7 +10,7 @@
     "build/types/**/*"
   ],
   "scripts": {
-    "build": "rimraf dist && ncc build src/index.ts -o dist -a",
+    "build": "rimraf dist && ncc build src/index.ts -o dist -a && ncc build src/cache-save.ts -o dist/cache-save",
     "test:main": "npm run build && node -r dotenv/config ./dist/index.js",
     "test": "npm run test:build && mocha --enable-source-maps --bail ./build/test/",
     "test:build": "rimraf build && tsc && tsc-alias",
@@ -20,6 +20,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@actions/cache": "^3.2.4",
     "@actions/core": "^1.10.1",
     "@bscotch/gamemaker-releases": "^0.7.0",
     "adm-zip": "^0.5.10",

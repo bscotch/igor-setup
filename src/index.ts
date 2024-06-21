@@ -1,5 +1,7 @@
 import * as core from "@actions/core";
 import { IgorSetup } from "$/lib/igor-setup";
+import { restoreCache } from "@/cache-restore.js";
+import { platform } from "os";
 
 export async function run() {
   try {
@@ -20,16 +22,25 @@ export async function run() {
       "local-settings-override-file"
     );
     const devicesOverrideFile = core.getInput("devices-settings-override-file");
-    const targetModules = core.getInput("modules")
-      ? core.getInput("modules").split(",")
-      : undefined;
-
+    const cache = core.getInput("cache");
     const igorSetup = new IgorSetup(
       accessKey,
       targetRuntime,
       localSettingsOverrideFile,
       devicesOverrideFile
     );
+    const targetModules = core.getInput("modules")
+      ? core.getInput("modules").split(",")
+      : igorSetup.getDefaultModulesIfNull(undefined);
+
+    if (cache === "true") {
+      const primaryKey = `${platform()}-${targetModules.join(",")}-${targetRuntime}`;
+      await restoreCache(primaryKey, [
+        igorSetup.runtimeDir,
+        igorSetup.bootstrapperDir,
+      ]);
+    }
+
     await igorSetup.ensureIgorBootStrapperBasedOnOs();
     igorSetup.installModules(targetModules);
     core.info(`Installed modules: ${igorSetup.targetModules.join(",")}`);
