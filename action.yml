@@ -28,7 +28,9 @@ outputs:
     description: "The path to the `local_settings.json` file"
   bootstrapper-dir:
     description: "The directory containing the Igor bootstrapper. Useful for caching."
-
+branding:
+  icon: 'gift'
+  color: 'green'
 runs:
   using: "node20"
   main: "dist/index.js"
