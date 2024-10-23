@@ -20,8 +20,18 @@ export async function run() {
       "local-settings-override-file"
     );
     const devicesOverrideFile = core.getInput("devices-settings-override-file");
-    const targetModules = core.getInput("modules")
-      ? core.getInput("modules").split(",")
+
+    const targetModulesFromInputModule = core.getInput("module");
+    const targetModulesFromInputModules = core.getInput("modules");
+    if (targetModulesFromInputModule && targetModulesFromInputModules) {
+      throw new Error(
+        "Both `module` and `modules` are specified. You must specify only one."
+      );
+    }
+    const targetModules =
+      targetModulesFromInputModule || targetModulesFromInputModules;
+    const targetModulesSplitAsArray = targetModules
+      ? targetModules.split(",")
       : undefined;
 
     const igorSetup = new IgorSetup(
@@ -31,7 +41,7 @@ export async function run() {
       devicesOverrideFile
     );
     await igorSetup.ensureIgorBootStrapperBasedOnOs();
-    igorSetup.installModules(targetModules);
+    igorSetup.installModules(targetModulesSplitAsArray);
     core.info(`Installed modules: ${igorSetup.targetModules.join(",")}`);
     core.info(`For runtime: ${targetRuntime}`);
     core.setOutput("cache-dir", igorSetup.cacheDir);

@@ -15,6 +15,8 @@ inputs:
     description: "Path to a file to overwrite the default devices.json that defines the Device Manager."
   modules:
     description: "A comma separated string for the modules to install."
+  module:
+    description: "Aliased version of `modules`."
 outputs:
   runtime-dir:
     description: "The directory containing the installed runtime."
@@ -29,8 +31,8 @@ outputs:
   bootstrapper-dir:
     description: "The directory containing the Igor bootstrapper. Useful for caching."
 branding:
-  icon: 'gift'
-  color: 'green'
+  icon: "gift"
+  color: "green"
 runs:
   using: "node20"
   main: "dist/index.js"
