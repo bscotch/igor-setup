@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/bscotch/igor-setup/compare/v1.1.0...v1.1.1) (2024-11-06)
+
+
+### Bug Fixes
+
+* Log error message when the action fails. ([f3fca68](https://github.com/bscotch/igor-setup/commit/f3fca68be6cc23bd3031ae83089431eb4eef6512)), closes [#7](https://github.com/bscotch/igor-setup/issues/7)
+* Looking up runtime version from the YYP file should account for whitespace in the `IDEVersion` field. ([f3fca68](https://github.com/bscotch/igor-setup/commit/f3fca68be6cc23bd3031ae83089431eb4eef6512))
+
 ## [1.1.0](https://github.com/bscotch/igor-setup/compare/v1.0.0...v1.1.0) (2024-10-23)
 
 
