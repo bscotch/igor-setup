@@ -34,7 +34,7 @@ function resetSandbox() {
     "machine.General Settings.Paths.IDE.TempFolder": "somewhere/else",
   });
   fs.writeFileSync(devicesOverrideFile, JSON.stringify(devicesOverride));
-  fs.writeFileSync(sampleYyp, `"IDEVersion":"2024.400.0.510"`);
+  fs.writeFileSync(sampleYyp, `"IDEVersion": "2024.400.0.510"`);
 }
 
 describe("Test Suite", function () {
@@ -87,7 +87,7 @@ describe("Test Suite", function () {
       await igorSetup.ensureIgorBootStrapperBasedOnOs();
       expect(() => {
         igorSetup.installModules(modulesToDownload);
-      }).to.throw("Runtime does not exist!");
+      }).to.throw("Runtime does not exist in GameMaker's RSS feed!");
     });
 
     it("Can infer the runtime based on a yyp file", async function () {
@@ -100,7 +100,7 @@ describe("Test Suite", function () {
       await igorSetup.ensureIgorBootStrapperBasedOnOs();
       expect(() => {
         igorSetup.installModules(modulesToDownload);
-      }).to.throw("Runtime does not exist!");
+      }).to.throw("Runtime does not exist in GameMaker's RSS feed!");
     });
 
     it("Can download new runtime", async function () {

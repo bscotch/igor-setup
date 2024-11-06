@@ -51,7 +51,8 @@ export async function run() {
     core.setOutput("settings-dir", igorSetup.workingDirLocalSettings);
     core.setOutput("bootstrapper-dir", igorSetup.bootstrapperDir);
   } catch (err) {
-    core.setFailed((err as Error).message);
+    core.error(err as Error);
+    core.setFailed(err as Error);
   }
 }
 
