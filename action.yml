@@ -17,6 +17,8 @@ inputs:
     description: "A comma separated string for the modules to install."
   cache:
     description: "Set to 'true' to cache the runtime for future workflow runs"
+  module:
+    description: "Aliased version of `modules`."
 outputs:
   runtime-dir:
     description: "The directory containing the installed runtime."
@@ -30,7 +32,9 @@ outputs:
     description: "The path to the `local_settings.json` file"
   bootstrapper-dir:
     description: "The directory containing the Igor bootstrapper. Useful for caching."
-
+branding:
+  icon: "gift"
+  color: "green"
 runs:
   using: "node20"
   main: "dist/index.js"

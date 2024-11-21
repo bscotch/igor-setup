@@ -42,6 +42,9 @@ This action allows you to set up the [Igor executable](https://manual.gamemaker.
     # Set to 'true' to cache the runtime for future workflow runs
     # Default: 'false'
     cache:
+
+    #Aliased version of `modules`.
+    module:
 ```
 
 ### Outputs

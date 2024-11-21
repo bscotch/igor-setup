@@ -23,18 +23,29 @@ export async function run() {
     );
     const devicesOverrideFile = core.getInput("devices-settings-override-file");
     const cache = core.getInput("cache");
+
+    const targetModulesFromInputModule = core.getInput("module");
+    const targetModulesFromInputModules = core.getInput("modules");
+    if (targetModulesFromInputModule && targetModulesFromInputModules) {
+      throw new Error(
+        "Both `module` and `modules` are specified. You must specify only one."
+      );
+    }
+    const targetModules =
+      targetModulesFromInputModule || targetModulesFromInputModules;
+
     const igorSetup = new IgorSetup(
       accessKey,
       targetRuntime,
       localSettingsOverrideFile,
       devicesOverrideFile
     );
-    const targetModules = core.getInput("modules")
-      ? core.getInput("modules").split(",")
+    const targetModulesSplitAsArray = targetModules
+      ? targetModules.split(",")
       : igorSetup.getDefaultModulesIfNull(undefined);
 
     if (cache === "true") {
-      const primaryKey = `${platform()}-${targetModules.join(",")}-${targetRuntime}`;
+      const primaryKey = `${platform()}-${targetModulesSplitAsArray.join(",")}-${targetRuntime}`;
       await restoreCache(primaryKey, [
         igorSetup.runtimeDir,
         igorSetup.bootstrapperDir,
@@ -42,7 +53,7 @@ export async function run() {
     }
 
     await igorSetup.ensureIgorBootStrapperBasedOnOs();
-    igorSetup.installModules(targetModules);
+    igorSetup.installModules(targetModulesSplitAsArray);
     core.info(`Installed modules: ${igorSetup.targetModules.join(",")}`);
     core.info(`For runtime: ${targetRuntime}`);
     core.setOutput("cache-dir", igorSetup.cacheDir);
@@ -52,7 +63,8 @@ export async function run() {
     core.setOutput("settings-dir", igorSetup.workingDirLocalSettings);
     core.setOutput("bootstrapper-dir", igorSetup.bootstrapperDir);
   } catch (err) {
-    core.setFailed((err as Error).message);
+    core.error(err as Error);
+    core.setFailed(err as Error);
   }
 }
 

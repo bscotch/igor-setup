@@ -54,13 +54,13 @@ export class IgorSetup {
       throw new Error(`YYP file does not exist: ${yypPath}`);
     }
     const yypContent = fs.readFileSync(yypPath).toString();
-    const regex = /"IDEVersion":"(\d+\.\d+\.\d+\.\d+)"/;
+    const regex = /"IDEVersion":\s*"(\d+\.\d+\.\d+\.\d+)"/;
     const match = yypContent.match(regex);
     let ideVersion;
     if (match) {
       ideVersion = match[1];
     } else {
-      throw new Error("Could not find IDEVersion in the yyp file.");
+      throw new Error("Could not find the `IDEVersion` key in the yyp file.");
     }
     const releases = await fetchReleasesSummaryWithNotes();
     const release = releases.find((r) => r.ide.version == ideVersion);
@@ -389,7 +389,7 @@ export class IgorSetup {
           if (!this._runtimeExists(feed)) {
             feed = "https://gms.yoyogames.com/Zeus-Runtime-LTS.rss";
             if (!this._runtimeExists(feed)) {
-              throw "Runtime does not exist!";
+              throw "Runtime does not exist in GameMaker's RSS feed!";
             }
           }
         }
