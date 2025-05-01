@@ -145,9 +145,9 @@ export class IgorSetup {
         `-of=${licenseFileDir}`,
       ];
 
-      // console.log(this.igorExecutable);
-      // console.log(fetchLicenseArgs.join("\n"));
-      // console.log([this.igorExecutable, fetchLicenseArgs.join(" ")].join(" "));
+      console.log(this.igorExecutable);
+      console.log(fetchLicenseArgs.join("\n"));
+      console.log([this.igorExecutable, fetchLicenseArgs.join(" ")].join(" "));
 
       ps.spawnSync(this.igorExecutable, fetchLicenseArgs, {
         stdio: "inherit",

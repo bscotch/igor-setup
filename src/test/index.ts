@@ -9,7 +9,9 @@ dotenv.config();
 const sandboxRoot = resolve("./sandbox");
 const bootstrapperRoot = resolve("./bootstrapper");
 const accessKey = process.env.ACCESS_KEY as string;
-const targetRuntime = process.env.TARGET_RUNTIME || "2024.400.0.529";
+const defaultTargetRuntime = "2024.1400.0.802";
+const defaultIDEVersion = "2024.1400.0.795";
+const targetRuntime = process.env.TARGET_RUNTIME || defaultTargetRuntime;
 const localSettingsOverrideFile = join(
   sandboxRoot,
   "local_settings_override.json"
@@ -34,7 +36,7 @@ function resetSandbox() {
     "machine.General Settings.Paths.IDE.TempFolder": "somewhere/else",
   });
   fs.writeFileSync(devicesOverrideFile, JSON.stringify(devicesOverride));
-  fs.writeFileSync(sampleYyp, `"IDEVersion": "2024.400.0.510"`);
+  fs.writeFileSync(sampleYyp, `"IDEVersion": "${defaultIDEVersion}"`);
 }
 
 describe("Test Suite", function () {
@@ -92,7 +94,7 @@ describe("Test Suite", function () {
 
     it("Can infer the runtime based on a yyp file", async function () {
       const targetRuntime = await IgorSetup.getRuntimeBasedOnYyp(sampleYyp);
-      expect(targetRuntime).to.equal("2024.400.0.529");
+      expect(targetRuntime).to.equal(defaultTargetRuntime);
     });
 
     it("Can throw if the interested runtime is not available in the rss", async function () {
