@@ -14,7 +14,7 @@ This action allows you to set up the [Igor executable](https://manual.gamemaker.
 ### Inputs
 
 ```yaml
-- uses: bscotch/igor-setup@v1
+- uses: bscotch/igor-setup@v2
   with:
     # See the Access Key section of https://manual.gamemaker.io/beta/en/#t=Settings%2FBuilding_via_Command_Line.htm
     # Required
