@@ -120,8 +120,8 @@ export class IgorSetup {
               resolve(igorExecutableFullPath);
             });
           } else {
-            reject(
-              `GameMaker license server responded with ${response.statusCode}`
+            throw new Error(
+              `GameMaker boot strapper server responded with ${response.statusCode}`
             );
           }
         });
