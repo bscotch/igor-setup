@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const sandboxRoot = resolve("./sandbox");
+const gmSandboxRoot = resolve("./gm-sandbox");
 const bootstrapperRoot = resolve("./bootstrapper");
 const accessKey = process.env.ACCESS_KEY as string;
 const defaultTargetRuntime = "2024.1400.0.802";
@@ -30,6 +31,7 @@ const sampleYyp = join(sandboxRoot, "sample.yyp");
 function resetSandbox() {
   fs.ensureDirSync(sandboxRoot);
   fs.emptyDirSync(sandboxRoot);
+  fs.removeSync(gmSandboxRoot);
   fs.removeSync(bootstrapperRoot);
   fs.removeSync(runtimesRoot);
   fs.writeJsonSync(localSettingsOverrideFile, {
@@ -84,9 +86,34 @@ describe("Test Suite", function () {
       expect(devices).to.deep.equal(devicesOverride);
     });
 
+    it("Can ensure Igor bootstrapper is installed", async function () {
+      const testEnvs = [
+        { PLATFORM: "win32", ARCH: "x64" },
+        // { PLATFORM: "win32", ARCH: "arm64" }, //This one actually use `windows` instead of `win` for the platform name, but the downloading address is still `win`
+        { PLATFORM: "linux", ARCH: "x64" },
+        { PLATFORM: "linux", ARCH: "arm64" },
+        { PLATFORM: "darwin", ARCH: "x64" },
+        { PLATFORM: "darwin", ARCH: "arm64" },
+      ];
+
+      for (const testEnv of testEnvs) {
+        resetSandbox();
+        process.env.PLATFORM = testEnv.PLATFORM;
+        process.env.ARCH = testEnv.ARCH;
+        const igorSetup = new IgorSetup(accessKey, targetRuntime);
+        const igorExecutable =
+          await igorSetup.ensureIgorBootStrapperBasedOnOs();
+        console.log("Igor executable path: ", igorExecutable);
+      }
+
+      process.env.PLATFORM = "";
+      process.env.ARCH = "";
+    });
+
     it("Can throw if the interested runtime is not available in the rss", async function () {
       const igorSetup = new IgorSetup(accessKey, "0.0.0.0");
       await igorSetup.ensureIgorBootStrapperBasedOnOs();
+      await igorSetup.getIgorLicense();
       expect(() => {
         igorSetup.installModules(modulesToDownload);
       }).to.throw("Runtime does not exist in GameMaker's RSS feed!");
@@ -100,6 +127,7 @@ describe("Test Suite", function () {
     it("Can throw if the interested runtime is not available in the rss", async function () {
       const igorSetup = new IgorSetup(accessKey, "0.0.0.0");
       await igorSetup.ensureIgorBootStrapperBasedOnOs();
+      await igorSetup.getIgorLicense();
       expect(() => {
         igorSetup.installModules(modulesToDownload);
       }).to.throw("Runtime does not exist in GameMaker's RSS feed!");
@@ -112,6 +140,7 @@ describe("Test Suite", function () {
         compileLocalSettingsOverrideFile
       );
       await igorSetup.ensureIgorBootStrapperBasedOnOs();
+      await igorSetup.getIgorLicense();
       igorSetup.installModules(modulesToDownload);
       expect(igorSetup.modulesAreInstalled(modulesToDownload)).to.be.true;
     });

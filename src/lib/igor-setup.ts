@@ -70,8 +70,10 @@ export class IgorSetup {
 
   async ensureIgorBootStrapperBasedOnOs() {
     let igorExecutable = "Igor";
+    const runnerPlatform = process.env.PLATFORM || platform();
+    const runnerArch = process.env.ARCH || process.arch;
     let igorPlatform;
-    switch (platform()) {
+    switch (runnerPlatform) {
       case "win32":
         igorPlatform = "win";
         igorExecutable += ".exe";
@@ -86,27 +88,32 @@ export class IgorSetup {
         throw new Error("Unsupported platform!");
     }
 
-    let arch;
-    switch (process.arch) {
+    let igorArch;
+    switch (runnerArch) {
       case "x64":
-        arch = "x64";
+        igorArch = "x64";
         break;
       case "arm64":
-        arch = "arm64";
-        if (igorPlatform === "osx") {
-          igorPlatform = "osx.11.0";
-        }
+        igorArch = "arm64";
         break;
       default:
         throw new Error("Unsupported architecture!");
     }
 
     const igorExecutableFullPath = path.resolve(
+      path.join(this.bootstrapperDir, igorPlatform, igorArch, igorExecutable)
+    );
+    const igorExecutableLegacyFullPath = path.resolve(
       path.join(this.bootstrapperDir, igorExecutable)
     );
-    if (!fs.existsSync(igorExecutableFullPath)) {
+    let igorExecutableFullPathExists = fs.existsSync(igorExecutableFullPath);
+    let igorExecutableLegacyFullPathExists = fs.existsSync(
+      igorExecutableLegacyFullPath
+    );
+
+    if (!igorExecutableFullPathExists && !igorExecutableLegacyFullPathExists) {
       const bootstrapperDir = this.bootstrapperDir;
-      const igorUrl = `https://gms.yoyogames.com/igor_${igorPlatform}-${arch}.zip`;
+      const igorUrl = `https://gms.yoyogames.com/igor_${igorPlatform}-${igorArch}.zip`;
       const extraction = new Promise((resolve, reject) => {
         const tempDir = fs.mkdtempSync(path.join(tmpdir(), "gms2-"));
         const igorZipPath = path.join(tempDir, "igor.zip");
@@ -128,13 +135,31 @@ export class IgorSetup {
       });
       await extraction;
     } else {
-      core.info(
-        `Igor bootstrapper already exists at: ${igorExecutableFullPath}`
-      );
+      if (igorExecutableFullPathExists) {
+        core.info(
+          `Igor bootstrapper already exists at: ${igorExecutableFullPath}`
+        );
+      } else if (igorExecutableLegacyFullPathExists) {
+        core.info(
+          `Igor bootstrapper already exists at: ${igorExecutableLegacyFullPath}`
+        );
+      }
     }
-    this.igorExecutable = igorExecutableFullPath;
+    igorExecutableFullPathExists = fs.existsSync(igorExecutableFullPath);
+    igorExecutableLegacyFullPathExists = fs.existsSync(
+      igorExecutableLegacyFullPath
+    );
+    if (igorExecutableLegacyFullPathExists) {
+      this.igorExecutable = igorExecutableLegacyFullPath;
+    }
+    if (igorExecutableFullPathExists) {
+      this.igorExecutable = igorExecutableFullPath;
+    }
     fs.chmodSync(this.igorExecutable, 0o777);
+    return this.igorExecutable;
+  }
 
+  async getIgorLicense() {
     // Get the license file
     const licenseFileDir = path.join(this.userDir, "licence.plist");
     if (!fs.existsSync(licenseFileDir)) {

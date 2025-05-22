@@ -53,6 +53,7 @@ export async function run() {
     }
 
     await igorSetup.ensureIgorBootStrapperBasedOnOs();
+    await igorSetup.getIgorLicense();
     igorSetup.installModules(targetModulesSplitAsArray);
     core.info(`Installed modules: ${igorSetup.targetModules.join(",")}`);
     core.info(`For runtime: ${targetRuntime}`);
