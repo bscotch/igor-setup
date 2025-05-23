@@ -70,43 +70,65 @@ export class IgorSetup {
 
   async ensureIgorBootStrapperBasedOnOs() {
     let igorExecutable = "Igor";
+    const runnerPlatform = process.env.IGOR_PLATFORM || platform();
+    const runnerArch = process.env.IGOR_ARCH || process.arch;
+    let igorExtractionPlatform;
     let igorPlatform;
-    switch (platform()) {
+    switch (runnerPlatform) {
       case "win32":
         igorPlatform = "win";
         igorExecutable += ".exe";
+        igorExtractionPlatform = "windows";
         break;
       case "darwin":
         igorPlatform = "osx";
+        igorExtractionPlatform = igorPlatform;
         break;
       case "linux":
         igorPlatform = "linux";
+        igorExtractionPlatform = igorPlatform;
         break;
       default:
         throw new Error("Unsupported platform!");
     }
 
-    let arch;
-    switch (process.arch) {
+    let igorArch;
+    switch (runnerArch) {
       case "x64":
-        arch = "x64";
+        igorArch = "x64";
         break;
       case "arm64":
-        arch = "arm64";
-        if (igorPlatform === "osx") {
-          igorPlatform = "osx.11.0";
-        }
+        igorArch = "arm64";
         break;
       default:
         throw new Error("Unsupported architecture!");
     }
 
     const igorExecutableFullPath = path.resolve(
+      path.join(
+        this.bootstrapperDir,
+        igorExtractionPlatform,
+        igorArch,
+        igorExecutable
+      )
+    );
+    core.info(
+      `Igor executable full path: ${igorExecutableFullPath} (${runnerPlatform}, ${runnerArch})`
+    );
+    const igorExecutableLegacyFullPath = path.resolve(
       path.join(this.bootstrapperDir, igorExecutable)
     );
-    if (!fs.existsSync(igorExecutableFullPath)) {
+    core.info(
+      `Igor executable legacy full path: ${igorExecutableLegacyFullPath} (${runnerPlatform}, ${runnerArch})`
+    );
+    let igorExecutableFullPathExists = fs.existsSync(igorExecutableFullPath);
+    let igorExecutableLegacyFullPathExists = fs.existsSync(
+      igorExecutableLegacyFullPath
+    );
+
+    if (!igorExecutableFullPathExists && !igorExecutableLegacyFullPathExists) {
       const bootstrapperDir = this.bootstrapperDir;
-      const igorUrl = `https://gms.yoyogames.com/igor_${igorPlatform}-${arch}.zip`;
+      const igorUrl = `https://gms.yoyogames.com/igor_${igorPlatform}-${igorArch}.zip`;
       const extraction = new Promise((resolve, reject) => {
         const tempDir = fs.mkdtempSync(path.join(tmpdir(), "gms2-"));
         const igorZipPath = path.join(tempDir, "igor.zip");
@@ -117,6 +139,7 @@ export class IgorSetup {
             file.on("finish", function () {
               const zip = new admzip(igorZipPath);
               zip.extractAllTo(bootstrapperDir, true);
+              core.info(`Igor bootstrapper extracted to: ${bootstrapperDir}`);
               resolve(igorExecutableFullPath);
             });
           } else {
@@ -128,13 +151,31 @@ export class IgorSetup {
       });
       await extraction;
     } else {
-      core.info(
-        `Igor bootstrapper already exists at: ${igorExecutableFullPath}`
-      );
+      if (igorExecutableFullPathExists) {
+        core.info(
+          `Igor bootstrapper already exists at: ${igorExecutableFullPath}`
+        );
+      } else if (igorExecutableLegacyFullPathExists) {
+        core.info(
+          `Igor bootstrapper already exists at: ${igorExecutableLegacyFullPath}`
+        );
+      }
     }
-    this.igorExecutable = igorExecutableFullPath;
+    igorExecutableFullPathExists = fs.existsSync(igorExecutableFullPath);
+    igorExecutableLegacyFullPathExists = fs.existsSync(
+      igorExecutableLegacyFullPath
+    );
+    if (igorExecutableLegacyFullPathExists) {
+      this.igorExecutable = igorExecutableLegacyFullPath;
+    }
+    if (igorExecutableFullPathExists) {
+      this.igorExecutable = igorExecutableFullPath;
+    }
     fs.chmodSync(this.igorExecutable, 0o777);
+    return this.igorExecutable;
+  }
 
+  async getIgorLicense() {
     // Get the license file
     const licenseFileDir = path.join(this.userDir, "licence.plist");
     if (!fs.existsSync(licenseFileDir)) {

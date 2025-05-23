@@ -46,6 +46,7 @@ export async function run() {
 
     if (cache === "true") {
       const primaryKey = `${platform()}-${targetModulesSplitAsArray.join(",")}-${targetRuntime}`;
+      core.info(`Cache primary key: ${primaryKey}`);
       await restoreCache(primaryKey, [
         igorSetup.runtimeDir,
         igorSetup.bootstrapperDir,
@@ -53,6 +54,7 @@ export async function run() {
     }
 
     await igorSetup.ensureIgorBootStrapperBasedOnOs();
+    await igorSetup.getIgorLicense();
     igorSetup.installModules(targetModulesSplitAsArray);
     core.info(`Installed modules: ${igorSetup.targetModules.join(",")}`);
     core.info(`For runtime: ${targetRuntime}`);

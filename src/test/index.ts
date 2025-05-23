@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const sandboxRoot = resolve("./sandbox");
+const gmSandboxRoot = resolve("./gm-sandbox");
 const bootstrapperRoot = resolve("./bootstrapper");
 const accessKey = process.env.ACCESS_KEY as string;
 const defaultTargetRuntime = "2024.1400.0.802";
@@ -30,6 +31,7 @@ const sampleYyp = join(sandboxRoot, "sample.yyp");
 function resetSandbox() {
   fs.ensureDirSync(sandboxRoot);
   fs.emptyDirSync(sandboxRoot);
+  fs.removeSync(gmSandboxRoot);
   fs.removeSync(bootstrapperRoot);
   fs.removeSync(runtimesRoot);
   fs.writeJsonSync(localSettingsOverrideFile, {
@@ -84,9 +86,48 @@ describe("Test Suite", function () {
       expect(devices).to.deep.equal(devicesOverride);
     });
 
+    it.only("Can ensure Igor bootstrapper is installed", async function () {
+      const testEnvs = [
+        { PLATFORM: "win32", ARCH: "x64" },
+        { PLATFORM: "win32", ARCH: "arm64" },
+        { PLATFORM: "linux", ARCH: "x64" },
+        { PLATFORM: "linux", ARCH: "arm64" },
+        { PLATFORM: "darwin", ARCH: "x64" },
+        { PLATFORM: "darwin", ARCH: "arm64" },
+      ];
+
+      for (const testEnv of testEnvs) {
+        resetSandbox();
+        process.env.IGOR_PLATFORM = testEnv.PLATFORM;
+        process.env.IGOR_ARCH = testEnv.ARCH;
+        const igorSetup = new IgorSetup(accessKey, targetRuntime);
+        try {
+          const igorExecutable =
+            await igorSetup.ensureIgorBootStrapperBasedOnOs();
+          console.log("Igor executable path: ", igorExecutable);
+        } catch (error) {
+          console.log(
+            `Error occurred while ensuring Igor bootstrapper for ${testEnv.PLATFORM} ${testEnv.ARCH}:`
+          );
+          // Show the content of the extracted directory
+          const extractedFiles = fs.readdirSync(igorSetup.bootstrapperDir, {
+            recursive: true,
+          });
+          extractedFiles.forEach((file) => {
+            console.log(`Extracted file: ${file}`);
+          });
+          throw error;
+        }
+      }
+
+      process.env.IGOR_PLATFORM = "";
+      process.env.IGOR_ARCH = "";
+    });
+
     it("Can throw if the interested runtime is not available in the rss", async function () {
       const igorSetup = new IgorSetup(accessKey, "0.0.0.0");
       await igorSetup.ensureIgorBootStrapperBasedOnOs();
+      await igorSetup.getIgorLicense();
       expect(() => {
         igorSetup.installModules(modulesToDownload);
       }).to.throw("Runtime does not exist in GameMaker's RSS feed!");
@@ -100,6 +141,7 @@ describe("Test Suite", function () {
     it("Can throw if the interested runtime is not available in the rss", async function () {
       const igorSetup = new IgorSetup(accessKey, "0.0.0.0");
       await igorSetup.ensureIgorBootStrapperBasedOnOs();
+      await igorSetup.getIgorLicense();
       expect(() => {
         igorSetup.installModules(modulesToDownload);
       }).to.throw("Runtime does not exist in GameMaker's RSS feed!");
@@ -112,6 +154,7 @@ describe("Test Suite", function () {
         compileLocalSettingsOverrideFile
       );
       await igorSetup.ensureIgorBootStrapperBasedOnOs();
+      await igorSetup.getIgorLicense();
       igorSetup.installModules(modulesToDownload);
       expect(igorSetup.modulesAreInstalled(modulesToDownload)).to.be.true;
     });
