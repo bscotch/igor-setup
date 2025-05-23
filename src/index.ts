@@ -46,6 +46,7 @@ export async function run() {
 
     if (cache === "true") {
       const primaryKey = `${platform()}-${targetModulesSplitAsArray.join(",")}-${targetRuntime}`;
+      core.info(`Cache primary key: ${primaryKey}`);
       await restoreCache(primaryKey, [
         igorSetup.runtimeDir,
         igorSetup.bootstrapperDir,

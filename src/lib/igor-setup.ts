@@ -70,19 +70,23 @@ export class IgorSetup {
 
   async ensureIgorBootStrapperBasedOnOs() {
     let igorExecutable = "Igor";
-    const runnerPlatform = process.env.PLATFORM || platform();
-    const runnerArch = process.env.ARCH || process.arch;
+    const runnerPlatform = process.env.IGOR_PLATFORM || platform();
+    const runnerArch = process.env.IGOR_ARCH || process.arch;
+    let igorExtractionPlatform;
     let igorPlatform;
     switch (runnerPlatform) {
       case "win32":
         igorPlatform = "win";
         igorExecutable += ".exe";
+        igorExtractionPlatform = "windows";
         break;
       case "darwin":
         igorPlatform = "osx";
+        igorExtractionPlatform = igorPlatform;
         break;
       case "linux":
         igorPlatform = "linux";
+        igorExtractionPlatform = igorPlatform;
         break;
       default:
         throw new Error("Unsupported platform!");
@@ -101,10 +105,21 @@ export class IgorSetup {
     }
 
     const igorExecutableFullPath = path.resolve(
-      path.join(this.bootstrapperDir, igorPlatform, igorArch, igorExecutable)
+      path.join(
+        this.bootstrapperDir,
+        igorExtractionPlatform,
+        igorArch,
+        igorExecutable
+      )
+    );
+    core.info(
+      `Igor executable full path: ${igorExecutableFullPath} (${runnerPlatform}, ${runnerArch})`
     );
     const igorExecutableLegacyFullPath = path.resolve(
       path.join(this.bootstrapperDir, igorExecutable)
+    );
+    core.info(
+      `Igor executable legacy full path: ${igorExecutableLegacyFullPath} (${runnerPlatform}, ${runnerArch})`
     );
     let igorExecutableFullPathExists = fs.existsSync(igorExecutableFullPath);
     let igorExecutableLegacyFullPathExists = fs.existsSync(
@@ -124,6 +139,7 @@ export class IgorSetup {
             file.on("finish", function () {
               const zip = new admzip(igorZipPath);
               zip.extractAllTo(bootstrapperDir, true);
+              core.info(`Igor bootstrapper extracted to: ${bootstrapperDir}`);
               resolve(igorExecutableFullPath);
             });
           } else {

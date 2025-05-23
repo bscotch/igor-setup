@@ -86,10 +86,10 @@ describe("Test Suite", function () {
       expect(devices).to.deep.equal(devicesOverride);
     });
 
-    it("Can ensure Igor bootstrapper is installed", async function () {
+    it.only("Can ensure Igor bootstrapper is installed", async function () {
       const testEnvs = [
         { PLATFORM: "win32", ARCH: "x64" },
-        // { PLATFORM: "win32", ARCH: "arm64" }, //This one actually use `windows` instead of `win` for the platform name, but the downloading address is still `win`
+        { PLATFORM: "win32", ARCH: "arm64" },
         { PLATFORM: "linux", ARCH: "x64" },
         { PLATFORM: "linux", ARCH: "arm64" },
         { PLATFORM: "darwin", ARCH: "x64" },
@@ -98,16 +98,30 @@ describe("Test Suite", function () {
 
       for (const testEnv of testEnvs) {
         resetSandbox();
-        process.env.PLATFORM = testEnv.PLATFORM;
-        process.env.ARCH = testEnv.ARCH;
+        process.env.IGOR_PLATFORM = testEnv.PLATFORM;
+        process.env.IGOR_ARCH = testEnv.ARCH;
         const igorSetup = new IgorSetup(accessKey, targetRuntime);
-        const igorExecutable =
-          await igorSetup.ensureIgorBootStrapperBasedOnOs();
-        console.log("Igor executable path: ", igorExecutable);
+        try {
+          const igorExecutable =
+            await igorSetup.ensureIgorBootStrapperBasedOnOs();
+          console.log("Igor executable path: ", igorExecutable);
+        } catch (error) {
+          console.log(
+            `Error occurred while ensuring Igor bootstrapper for ${testEnv.PLATFORM} ${testEnv.ARCH}:`
+          );
+          // Show the content of the extracted directory
+          const extractedFiles = fs.readdirSync(igorSetup.bootstrapperDir, {
+            recursive: true,
+          });
+          extractedFiles.forEach((file) => {
+            console.log(`Extracted file: ${file}`);
+          });
+          throw error;
+        }
       }
 
-      process.env.PLATFORM = "";
-      process.env.ARCH = "";
+      process.env.IGOR_PLATFORM = "";
+      process.env.IGOR_ARCH = "";
     });
 
     it("Can throw if the interested runtime is not available in the rss", async function () {
