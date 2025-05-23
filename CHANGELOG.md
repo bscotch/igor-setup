@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.4](https://github.com/bscotch/igor-setup/compare/v1.1.3...v1.1.4) (2025-05-23)
+
+
+### Bug Fixes
+
+* Now accommodates the new Igor bootstrapper file structure. ([2cb075f](https://github.com/bscotch/igor-setup/commit/2cb075f7865fce1960817594c59d259378d0d2c0))
+* Should be able to handle the legacy and new file structure on Windows. ([e1c30a3](https://github.com/bscotch/igor-setup/commit/e1c30a360f7e0906f3c0e469a302dc544edabc6c))
+
 ## [1.1.3](https://github.com/bscotch/igor-setup/compare/v1.1.2...v1.1.3) (2025-05-19)
 
 
