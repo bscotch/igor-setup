@@ -331,9 +331,13 @@ export class IgorSetup {
   }
 
   private _createLocalSettings() {
+    const visual_studio_path =
+      "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\Common7\\Tools\\VsDevCmd.bat"; //See https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md#visual-studio-enterprise-2022
     const defaultLocalSettings: Partial<LocalSettings> = {
       "machine.Platform Settings.Windows.visual_studio_path":
-        "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\Common7\\Tools\\VsDevCmd.bat", //See https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md#visual-studio-enterprise-2022
+        visual_studio_path,
+      "machine.Platform Settings.Xbox Series XS.visual_studio_path":
+        visual_studio_path,
       "machine.Platform Settings.Android.Paths.jdk_location":
         process.env.JAVA_HOME_11_X64,
       "machine.Platform Settings.Android.Paths.sdk_location":
@@ -408,6 +412,10 @@ export class IgorSetup {
         break;
       case "linux":
         requiredModules = ["linux", "linuxYYC"];
+        break;
+      case "xboxone":
+      case "xboxseriesxs":
+        requiredModules = ["xboxseriesxs"];
         break;
       default:
         throw new Error(`${targetPlatform} is not supported!`);

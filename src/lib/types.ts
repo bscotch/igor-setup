@@ -66,6 +66,8 @@ const defaultLocalSettings = {
   userDir: "C:/Users/user",
   "cloud.General Settings.Compiling.UseSubstForDrivePaths": false,
   targetRuntime: "2024.400.0.529",
+  "machine.Platform Settings.Xbox Series XS.visual_studio_path":
+    "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat",
 };
 
 export type LocalSettings = typeof defaultLocalSettings;
