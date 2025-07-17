@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/bscotch/igor-setup/compare/v1.1.4...v1.2.0) (2025-07-17)
+
+
+### Features
+
+* Added support for Xbox. ([56fe2b0](https://github.com/bscotch/igor-setup/commit/56fe2b0b30b21dfc98b7cfff80529585d7435a19))
+
 ## [1.1.4](https://github.com/bscotch/igor-setup/compare/v1.1.3...v1.1.4) (2025-05-23)
 
 
