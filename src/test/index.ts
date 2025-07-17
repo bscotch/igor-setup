@@ -86,7 +86,7 @@ describe("Test Suite", function () {
       expect(devices).to.deep.equal(devicesOverride);
     });
 
-    it.only("Can ensure Igor bootstrapper is installed", async function () {
+    it("Can ensure Igor bootstrapper is installed", async function () {
       const testEnvs = [
         { PLATFORM: "win32", ARCH: "x64" },
         { PLATFORM: "win32", ARCH: "arm64" },
