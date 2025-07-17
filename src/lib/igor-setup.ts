@@ -224,6 +224,13 @@ export class IgorSetup {
           break;
       }
     }
+
+    modules = modules.map((module) => {
+      if (module.toLowerCase() === "xboxone") {
+        return "xboxseriesxs";
+      }
+      return module;
+    });
     return modules as ModuleAliases[];
   }
 
