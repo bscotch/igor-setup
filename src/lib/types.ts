@@ -68,6 +68,8 @@ const defaultLocalSettings = {
   targetRuntime: "2024.400.0.529",
   "machine.Platform Settings.Xbox Series XS.visual_studio_path":
     "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat",
+  "machine.Platform Settings.Switch.visual_studio_path":
+    "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat",
 };
 
 export type LocalSettings = typeof defaultLocalSettings;

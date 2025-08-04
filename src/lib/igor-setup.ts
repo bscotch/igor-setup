@@ -345,6 +345,7 @@ export class IgorSetup {
         visual_studio_path,
       "machine.Platform Settings.Xbox Series XS.visual_studio_path":
         visual_studio_path,
+      "machine.Platform Settings.Switch.visual_studio_path": visual_studio_path,
       "machine.Platform Settings.Android.Paths.jdk_location":
         process.env.JAVA_HOME_11_X64,
       "machine.Platform Settings.Android.Paths.sdk_location":
@@ -423,6 +424,9 @@ export class IgorSetup {
       case "xboxone":
       case "xboxseriesxs":
         requiredModules = ["xboxseriesxs"];
+        break;
+      case "switch":
+        requiredModules = ["switch"];
         break;
       default:
         throw new Error(`${targetPlatform} is not supported!`);
