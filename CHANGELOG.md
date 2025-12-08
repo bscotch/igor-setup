@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/bscotch/igor-setup/compare/v1.2.0...v1.2.1) (2025-12-08)
+
+
+### Bug Fixes
+
+* use email for user folder ([a3a169c](https://github.com/bscotch/igor-setup/commit/a3a169ca9d4cf144afb047ff376cd1f82f33af35))
+
 ## [1.2.0](https://github.com/bscotch/igor-setup/compare/v1.1.4...v1.2.0) (2025-11-24)
 
 
