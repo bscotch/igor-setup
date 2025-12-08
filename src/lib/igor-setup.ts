@@ -200,7 +200,7 @@ export class IgorSetup {
 
     const licenseFile = fs.readFileSync(licenseFileDir, "utf-8");
     const licenseFileContent = plist.parse(licenseFile) as any;
-    const userName = licenseFileContent.name.split("@")[0];
+    const userName = licenseFileContent.email.split("@")[0];
     const id = licenseFileContent.id;
     this.userName = `${userName}_${id}`;
     const newUserDir = path.join(this.workingDir, "gm-user", this.userName);
