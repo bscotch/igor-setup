@@ -70,6 +70,9 @@ const defaultLocalSettings = {
     "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat",
   "machine.Platform Settings.Switch.visual_studio_path":
     "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat",
+  "machine.Platform Settings.operagx.sdk_dir": "E:/emsdk",
+  "machine.Platform Settings.operagx.default_webserver_port": 51264,
+  "machine.Platform Settings.operagx.default_package_choice": 4,
 };
 
 export type LocalSettings = typeof defaultLocalSettings;
@@ -81,6 +84,7 @@ export type ModuleAliases =
   | "linux"
   | "html5"
   | "main"
+  | "operagx"
   | string;
 
 const defaultRuntimeReceipt = {

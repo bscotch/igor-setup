@@ -362,6 +362,8 @@ export class IgorSetup {
       runtimeDir: this.runtimeDir,
       userDir: this.userDir,
       targetRuntime: this.targetRuntime,
+      "machine.Platform Settings.operagx.sdk_dir": process.env.EMSDK,
+      "machine.Platform Settings.operagx.default_package_choice": 4,
     };
 
     const localSettings = defaultLocalSettings;
@@ -428,6 +430,9 @@ export class IgorSetup {
       case "switch":
         requiredModules = ["switch"];
         break;
+      case "operagx":
+        requiredModules = ["operagx", "operagxYYC"];
+        break;
       default:
         throw new Error(`${targetPlatform} is not supported!`);
     }
@@ -449,7 +454,12 @@ export class IgorSetup {
           if (!this._runtimeExists(feed)) {
             feed = "https://gms.yoyogames.com/Zeus-Runtime-LTS.rss";
             if (!this._runtimeExists(feed)) {
-              throw "Runtime does not exist in GameMaker's RSS feed!";
+              if (!this._runtimeExists(feed)) {
+                feed = "https://gms.yoyogames.com/Zeus-Runtime-Nocturnus-I.rss";
+                if (!this._runtimeExists(feed)) {
+                  throw "Runtime does not exist in GameMaker's RSS feed!";
+                }
+              }
             }
           }
         }
