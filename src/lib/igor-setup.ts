@@ -364,6 +364,7 @@ export class IgorSetup {
       targetRuntime: this.targetRuntime,
       "machine.Platform Settings.operagx.sdk_dir": process.env.EMSDK,
       "machine.Platform Settings.operagx.default_package_choice": 4,
+      "machine.Platform Settings.macOS.suppress_build": true,
     };
 
     const localSettings = defaultLocalSettings;
