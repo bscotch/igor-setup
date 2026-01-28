@@ -13,10 +13,7 @@
     "build": "rimraf dist && ncc build src/index.ts -o dist -a && ncc build src/cache-save.ts -o dist/cache-save",
     "test:main": "npm run build && node -r dotenv/config ./dist/index.js",
     "test": "npm run test:build && mocha --enable-source-maps --bail ./build/test/",
-    "test:build": "rimraf build && tsc && tsc-alias",
-    "version": "git add -A",
-    "postversion": "git push --follow-tags",
-    "preversion": "npm run build"
+    "test:build": "rimraf build && tsc && tsc-alias"
   },
   "license": "MIT",
   "dependencies": {
