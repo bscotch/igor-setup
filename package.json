@@ -22,7 +22,7 @@
   "dependencies": {
     "@actions/cache": "^4.0.3",
     "@actions/core": "^1.11.1",
-    "@bscotch/gamemaker-releases": "^0.7.0",
+    "@bscotch/gamemaker-releases": "^0.8.0",
     "adm-zip": "^0.5.16",
     "fs-extra": "^11.3.0",
     "plist": "^3.1.0"
