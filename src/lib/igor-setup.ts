@@ -183,7 +183,7 @@ export class IgorSetup {
         "runtime",
         "FetchLicense",
         `-ak=${this.accessKey}`,
-        `-of=${licenseFileDir}`,
+        `-of=${licenseFileDir}`
       ];
 
       console.log(this.igorExecutable);
@@ -192,7 +192,7 @@ export class IgorSetup {
 
       ps.spawnSync(this.igorExecutable, fetchLicenseArgs, {
         stdio: "inherit",
-        cwd: path.dirname(this.igorExecutable),
+        cwd: path.dirname(this.igorExecutable)
       });
     } else {
       core.info(`License file already exists at: ${licenseFileDir}`);
@@ -263,7 +263,7 @@ export class IgorSetup {
         core.info([this.igorExecutable, args.join(" ")].join(" "));
         ps.spawnSync(this.igorExecutable, args, {
           stdio: "inherit",
-          cwd: path.dirname(this.igorExecutable),
+          cwd: path.dirname(this.igorExecutable)
         });
         this.targetModules = targetAndOsModules;
       } else {
@@ -316,7 +316,7 @@ export class IgorSetup {
 
     const cmd = this.igorExecutable;
     const res = ps.spawnSync(cmd, args, {
-      cwd: path.dirname(cmd),
+      cwd: path.dirname(cmd)
     });
     const output = res.output.toString();
     core.info(output);
@@ -364,7 +364,7 @@ export class IgorSetup {
       targetRuntime: this.targetRuntime,
       "machine.Platform Settings.operagx.sdk_dir": process.env.EMSDK,
       "machine.Platform Settings.operagx.default_package_choice": 4,
-      "machine.Platform Settings.macOS.suppress_build": true,
+      "machine.Platform Settings.macOS.suppress_build": true
     };
 
     const localSettings = defaultLocalSettings;
@@ -480,7 +480,7 @@ export class IgorSetup {
       major: versionParts[0],
       minor: versionParts[1],
       patch: versionParts[2],
-      revision: versionParts[3],
+      revision: versionParts[3]
     };
   }
 
@@ -509,7 +509,7 @@ export class IgorSetup {
       fs.chmodSync(postInstallSh, 0o777);
       ps.spawnSync("sh", [postInstallSh], {
         stdio: "inherit",
-        cwd: this.targetRuntimeDir,
+        cwd: this.targetRuntimeDir
       });
     }
 
@@ -539,7 +539,7 @@ export class IgorSetup {
         fs.chmodSync(optimizeSh, 0o777);
         ps.spawnSync("sh", [optimizeSh], {
           stdio: "inherit",
-          cwd: this.targetRuntimeDir,
+          cwd: this.targetRuntimeDir
         });
       }
     }

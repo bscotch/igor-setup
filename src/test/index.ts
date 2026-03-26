@@ -35,7 +35,7 @@ function resetSandbox() {
   fs.removeSync(bootstrapperRoot);
   fs.removeSync(runtimesRoot);
   fs.writeJsonSync(localSettingsOverrideFile, {
-    "machine.General Settings.Paths.IDE.TempFolder": "somewhere/else",
+    "machine.General Settings.Paths.IDE.TempFolder": "somewhere/else"
   });
   fs.writeFileSync(devicesOverrideFile, JSON.stringify(devicesOverride));
   fs.writeFileSync(sampleYyp, `"IDEVersion": "${defaultIDEVersion}"`);
@@ -93,7 +93,7 @@ describe("Test Suite", function () {
         { PLATFORM: "linux", ARCH: "x64" },
         { PLATFORM: "linux", ARCH: "arm64" },
         { PLATFORM: "darwin", ARCH: "x64" },
-        { PLATFORM: "darwin", ARCH: "arm64" },
+        { PLATFORM: "darwin", ARCH: "arm64" }
       ];
 
       for (const testEnv of testEnvs) {
@@ -111,7 +111,7 @@ describe("Test Suite", function () {
           );
           // Show the content of the extracted directory
           const extractedFiles = fs.readdirSync(igorSetup.bootstrapperDir, {
-            recursive: true,
+            recursive: true
           });
           extractedFiles.forEach((file) => {
             console.log(`Extracted file: ${file}`);
@@ -156,6 +156,7 @@ describe("Test Suite", function () {
       await igorSetup.ensureIgorBootStrapperBasedOnOs();
       await igorSetup.getIgorLicense();
       igorSetup.installModules(modulesToDownload);
+      console.log("Installed modules: ", igorSetup.targetModules);
       expect(igorSetup.modulesAreInstalled(modulesToDownload)).to.be.true;
     });
   });

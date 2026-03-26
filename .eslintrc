@@ -4,24 +4,15 @@
     "node": true,
     "mocha": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "prettier"
-  ],
+  "plugins": ["@typescript-eslint", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2019,
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "ignorePatterns": [
-    ".eslintrc.js",
-    "prettier.config.js"
-  ],
+  "ignorePatterns": [".eslintrc.js", "prettier.config.js"],
   "rules": {
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/type-annotation-spacing": "off",
@@ -55,19 +46,16 @@
     "@typescript-eslint/no-var-requires": "error",
     "@typescript-eslint/prefer-namespace-keyword": "error",
     "@typescript-eslint/triple-slash-reference": "error",
-    "@typescript-eslint/no-floating-promises": [
-      "error"
-    ],
+    "@typescript-eslint/no-floating-promises": ["error"],
     "no-var": "error",
     "prefer-const": "error",
     "prefer-rest-params": "error",
-    "prefer-spread": "error"
+    "prefer-spread": "error",
+    "comma-dangle": ["error", "never"]
   },
   "overrides": [
     {
-      "files": [
-        "*.js"
-      ],
+      "files": ["*.js"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }
