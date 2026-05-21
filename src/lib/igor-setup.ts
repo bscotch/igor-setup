@@ -338,8 +338,13 @@ export class IgorSetup {
   }
 
   private _createLocalSettings() {
-    const visual_studio_path =
+    const visual_studio_path_2022 =
       "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\Common7\\Tools\\VsDevCmd.bat"; //See https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md#visual-studio-enterprise-2022
+    const visual_studio_path_2026 =
+      "C:\\Program Files\\Microsoft Visual Studio\\18\\Enterprise\\Common7\\Tools\\VsDevCmd.bat";
+    const visual_studio_path = fs.existsSync(visual_studio_path_2022)
+      ? visual_studio_path_2022
+      : visual_studio_path_2026;
     const defaultLocalSettings: Partial<LocalSettings> = {
       "machine.Platform Settings.Windows.visual_studio_path":
         visual_studio_path,
