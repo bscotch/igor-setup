@@ -338,8 +338,13 @@ export class IgorSetup {
   }
 
   private _createLocalSettings() {
-    const visual_studio_path =
+    const visual_studio_path_2022 =
       "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\Common7\\Tools\\VsDevCmd.bat"; //See https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md#visual-studio-enterprise-2022
+    const visual_studio_path_2026 =
+      "C:\\Program Files\\Microsoft Visual Studio\\18\\Enterprise\\Common7\\Tools\\VsDevCmd.bat";
+    const visual_studio_path = fs.existsSync(visual_studio_path_2022)
+      ? visual_studio_path_2022
+      : visual_studio_path_2026;
     const defaultLocalSettings: Partial<LocalSettings> = {
       "machine.Platform Settings.Windows.visual_studio_path":
         visual_studio_path,
@@ -446,32 +451,27 @@ export class IgorSetup {
   }
 
   private _inferFeed() {
-    let feed = "https://gms.yoyogames.com/Zeus-Runtime-NuBeta.rss";
-    if (!this._runtimeExists(feed)) {
-      feed = "https://gms.yoyogames.com/Zeus-Runtime-NuBeta-I.rss";
-      if (!this._runtimeExists(feed)) {
-        feed = "https://gms.yoyogames.com/Zeus-Runtime.rss";
-        if (!this._runtimeExists(feed)) {
-          if (!this._runtimeExists(feed)) {
-            feed = "https://gms.yoyogames.com/Zeus-Runtime-LTS.rss";
-            if (!this._runtimeExists(feed)) {
-              if (!this._runtimeExists(feed)) {
-                feed = "https://gms.yoyogames.com/Zeus-Runtime-Nocturnus-I.rss";
-                if (!this._runtimeExists(feed)) {
-                  throw "Runtime does not exist in GameMaker's RSS feed!";
-                }
-              }
-            }
-          }
-        }
+    const feeds = [
+      "https://gms.yoyogames.com/Zeus-Runtime-NuBeta.rss",
+      "https://gms.yoyogames.com/Zeus-Runtime-NuBeta-I.rss",
+      "https://gms.yoyogames.com/Zeus-Runtime.rss",
+      "https://gms.yoyogames.com/Zeus-Runtime-LTS.rss",
+      "https://gms.yoyogames.com/Zeus-Runtime-LTS2026.rss",
+      "https://gms.yoyogames.com/Zeus-Runtime-Nocturnus-I.rss"
+    ];
+
+    for (const feed of feeds) {
+      if (this._runtimeExists(feed)) {
+        //Cache busting by adding day and hour to the feed url
+        const date = new Date();
+        const day = date.getDay();
+        const hour = date.getHours();
+        const cacheBustingPostfix = `?day=${day}&hour=${hour}`;
+        return feed + cacheBustingPostfix;
       }
     }
-    //Cache busting by adding day and hour to the feed url
-    const date = new Date();
-    const day = date.getDay();
-    const hour = date.getHours();
-    const cacheBustingPostfix = `?day=${day}&hour=${hour}`;
-    return feed + cacheBustingPostfix;
+
+    throw "Runtime does not exist in GameMaker's RSS feed!";
   }
 
   private _getVersionParts(version: string) {
