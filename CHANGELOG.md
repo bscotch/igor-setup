@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/bscotch/igor-setup/compare/v1.3.0...v1.4.0) (2026-05-28)
+
+
+### Features
+
+* add support for gamemaker lts 2026, thanks @BenjaminHalko for the contribution! closes [#22](https://github.com/bscotch/igor-setup/issues/22) ([5d37d17](https://github.com/bscotch/igor-setup/commit/5d37d1717798cc607c038048c9759cb2ecf688b5))
+* support visual studio 2026, thanks @BenjaminHalko for the contribution! closes [#21](https://github.com/bscotch/igor-setup/issues/21) ([5d37d17](https://github.com/bscotch/igor-setup/commit/5d37d1717798cc607c038048c9759cb2ecf688b5))
+
 ## [1.3.0](https://github.com/bscotch/igor-setup/compare/v1.2.1...v1.3.0) (2026-01-06)
 
 
