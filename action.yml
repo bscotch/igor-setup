@@ -36,6 +36,6 @@ branding:
   icon: "gift"
   color: "green"
 runs:
-  using: "node20"
+  using: "node24"
   main: "dist/index.js"
   post: "dist/cache-save/index.js"
